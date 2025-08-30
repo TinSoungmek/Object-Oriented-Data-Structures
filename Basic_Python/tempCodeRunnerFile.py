@@ -1,0 +1,1 @@
+        matrix[i][layer] = char
