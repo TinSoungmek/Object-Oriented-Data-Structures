@@ -48,7 +48,7 @@ class BST:
                 self.summation(node.right, target))
     
 T = BST()
-inp,target = input('Enter the values to insert into BST and target sum : ').split(" / ")
+inp,target = input("Enter the values to insert into BST and target sum : ").split(" / ")
 inp = inp.split(" ")
 for i in inp:
     T.insert(int(i))
