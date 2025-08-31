@@ -21,7 +21,7 @@ class BST:
         else:
             if data < root.data:
                 root.left = self._insert(root.left, data)
-            else:
+            elif data > root.data:
                 root.right = self._insert(root.right, data)
         return root
     
@@ -30,11 +30,39 @@ class BST:
             self.printTree(node.right, level + 1)
             print('     ' * level, node)
             self.printTree(node.left, level + 1)
+        
+    def sum_of_tree(self, node):
+        sum = 0
+        
+        if node is None:
+            return 0
+        
+        sum += node.data
+        sum += self.sum_of_tree(node.left)
+        sum += self.sum_of_tree(node.right)
+
+        return sum
+    
+    def update_value(self, node, k):
+        if node is None:
+            return
+        
+        if node.data > k:
+            node.data = node.data*k
+        
+        self.update_value(node.left, k)
+        self.update_value(node.right, k)
 
 T = BST()
 print("**Sum of tree**")
-inp,target = input('Enter input : ').split(" / ")
+inp,k = input('Enter input : ').split("/")
+inp = inp.split(" ")
 for i in inp:
-    T.insert(i)
-
+    T.insert(int(i))
+print("\nTree before:")
 T.printTree(T.root)
+print(f"Sum of all nodes = {T.sum_of_tree(T.root)}")
+T.update_value(T.root, int(k))
+print("\nTree after:")
+T.printTree(T.root)
+print(f"Sum of all nodes = {T.sum_of_tree(T.root)}")
