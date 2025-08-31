@@ -12,17 +12,17 @@ class BST:
         self.root = None
 
     def insert(self, data):
-        self.root = BST._insert(self.root, data)
+        self.root = self._insert(self.root, data)
         return self.root
     
-    def _insert(root, data):
+    def _insert(self, root, data):
         if root is None:
             return Node(data)
         else:
             if data < root.data:
-                root.left = BST._insert(root.left, data)
+                root.left = self._insert(root.left, data)
             else:
-                root.right = BST._insert(root.right, data)
+                root.right = self._insert(root.right, data)
         return root
     
     def printTree(self, node, level = 0):
