@@ -55,17 +55,6 @@ class BST:
         path.pop()
         return False
 
-    def get_node(self, node, target):
-        if node is None:
-            return None
-        if node.data == target:
-            return node
-        elif target < node.data:
-            return self.get_node(node.left, target)
-        else:
-            return self.get_node(node.right, target)
-
-
 T = BST()
 inp,treasure,escape = input('Enter Input : ').split("/")
 inp = inp.split(" ")
