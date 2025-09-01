@@ -13,7 +13,6 @@ class BST:
 
     def insert(self, data):
         self.root = self._insert(self.root, data)
-        return self.root
     
     def _insert(self, root, data):
         if root is None:
