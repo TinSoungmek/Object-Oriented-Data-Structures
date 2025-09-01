@@ -30,20 +30,26 @@ class BST:
             print('     ' * level, node)
             self.printTree(node.left, level + 1)
 
-    def find_path(self, node, target, path):
+    def find_path(self, node, treasure, escape, path):
+        global status
 
         if node is None:
             return False
         
         path.append(node.data)
         
-        if node.data == target:
-            return True
+        if node.data == treasure:
+            status = 1
+            print("Found Treasure !!!")
         
+        if node.data == escape and status == 1:
+            print("Found Escape !!!")
+            return True
+            
         print("❌", " -> ".join(map(str, path)))
         
-        if (self.find_path(node.left, target, path) or
-        self.find_path(node.right, target, path)):
+        if (self.find_path(node.left, treasure, escape, path) or
+        self.find_path(node.right, treasure, escape, path)):
             return True
         
         path.pop()
@@ -63,25 +69,16 @@ class BST:
 T = BST()
 inp,treasure,escape = input('Enter Input : ').split("/")
 inp = inp.split(" ")
-path_to_treasure = []
-path_to_escape = []
+path = []
+status = 0
+
 for i in inp:
     T.insert(int(i))
 T.printTree(T.root)
 print("-------------------------------------------------")
-if T.find_path(T.root, int(treasure), path_to_treasure):
-    print("Found Treasure !!!")
-    
-    treasure_node = T.get_node(T.root ,path_to_treasure[-1])
-    path_to_escape = path_to_treasure[:-1]
-
-    if T.find_path(treasure_node, int(escape), path_to_escape):
-        print("Found Escape !!!")
-        print("✅", " -> ".join(map(str, path_to_escape)))
-        print(">>> Mission Complete <<<")
-
-    else:
-        print(">>> Mission Failed <<<")
+if T.find_path(T.root, int(treasure), int(escape), path):
+    print("✅", " -> ".join(map(str, path)))
+    print(">>> Mission Complete <<<")
 
 else:
     print(">>> Mission Failed <<<")
