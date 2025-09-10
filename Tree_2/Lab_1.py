@@ -21,7 +21,7 @@ class AVLTree:
             return -1 if node == None else node.height
 
         def balanceValue(self):      
-            return self.getHeight(self.right) - self.getHeight(self.left)
+            return self.getHeight(self.left) - self.getHeight(self.right)
 
     def __init__(self, root = None):
         self.root = None if root is None else root
@@ -47,28 +47,28 @@ class AVLTree:
             return root
         balance = root.balanceValue()
         if balance == -2:
-            if root.left.balanceValue() == 1:
-                root.left = self.rotateLeftChild(root.left)
+            if root.right.balanceValue() == 1:
+                root.right = self.rotateLeftChild(root.right)
             root = self.rotateRightChild(root)
         elif balance == 2:
-            if root.right.balanceValue() == -1:
-                root.right = self.rotateRightChild(root.right)
+            if root.left.balanceValue() == -1:
+                root.left = self.rotateRightChild(root.left)
             root = self.rotateLeftChild(root)
         root.setHeight()
         return root
 
-    def rotateLeftChild(self,root) :
-        newRoot = root.right
-        root.right = newRoot.left
-        newRoot.left = root
-        root.setHeight()
-        newRoot.setHeight()
-        return newRoot
- 
-    def rotateRightChild(self,root) :
+    def rotateLeftChild(self, root):
         newRoot = root.left
         root.left = newRoot.right
         newRoot.right = root
+        root.setHeight()
+        newRoot.setHeight()
+        return newRoot
+    
+    def rotateRightChild(self, root):
+        newRoot = root.right
+        root.right = newRoot.left
+        newRoot.left = root
         root.setHeight()
         newRoot.setHeight()
         return newRoot

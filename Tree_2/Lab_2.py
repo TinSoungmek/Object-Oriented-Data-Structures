@@ -16,7 +16,7 @@ class Node:
             return -1
         return node.height
     
-    def balanceVal(self):
+    def balanceValue(self):
         lheight = self.get_height(self.left)
         rheight = self.get_height(self.right)
         return lheight - rheight
@@ -39,36 +39,36 @@ class AVL:
             root = self.rebalance(root)
             return root
 
-    def left_rotate(self, x):
-        y = x.left
-        x.left = y.right
-        y.right = x
-        x.setHeight()
-        y.setHeight()
-        return y
+    def left_rotate(self, root):
+        newRoot = root.left
+        root.left = newRoot.right
+        newRoot.right = root
+        root.setHeight()
+        newRoot.setHeight()
+        return newRoot
     
-    def right_rotate(self, x):
-        y = x.right
-        x.right = y.left
-        y.left = x
-        x.setHeight()
-        y.setHeight()
-        return y
+    def right_rotate(self, root):
+        newRoot = root.right
+        root.right = newRoot.left
+        newRoot.left = root
+        root.setHeight()
+        newRoot.setHeight()
+        return newRoot
     
-    def rebalance(self, x):
-        if not x:
-            return x
-        balance = x.balanceVal()
+    def rebalance(self, root):
+        if root == None:
+            return root
+        balance = root.balanceValue()
         if balance == -2:
-            if x.right.balanceVal() == 1:
-                x.right = self.left_rotate(x.right)
-            x = self.right_rotate(x)
+            if root.left.balanceValue() == 1:
+                root.left = self.left_rotate(root.left)
+            root = self.right_rotate(root)
         elif balance == 2:
-            if x.left.balanceVal() == -1:
-                x.left = self.right_rotate(x.left)
-            x = self.left_rotate(x)
-        x.setHeight()
-        return x
+            if root.right.balanceValue() == -1:
+                root.right = self.right_rotate(root.right)
+            root = self.left_rotate(root)
+        root.setHeight()
+        return root
     
     def print_tree(self, node, level = 0):
         if node:
