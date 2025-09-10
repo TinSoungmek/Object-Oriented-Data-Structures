@@ -56,14 +56,13 @@ class AVLTree:
         if node is None:
             return []
         result = []
-        # Always traverse both sides
         result.extend(self._getRatingRange(node.left, start, end))
         if start <= node.data.rating <= end:
             result.append(node.data)
         result.extend(self._getRatingRange(node.right, start, end))
         return result
 
-    def balance(self, node):    #balance current node which return new root node
+    def balance(self, node):    
         BF = node.balanceFactor()
         if BF > 1:
             if node.right.balanceFactor() < 0:
@@ -75,7 +74,7 @@ class AVLTree:
             return node.rotateRight()
         return node
 
-    def getMin(self, node): #Get minimum rating node
+    def getMin(self, node):
         current = node
         while current.left:
             current = current.left
@@ -121,19 +120,19 @@ class Node:
     def __str__(self):
         return f'{self.data}'
     
-    def balanceFactor(self):    #Get balance factor
+    def balanceFactor(self): 
         if not self:
             return -1
         left_height = self.left.height if self.left else -1
         right_height = self.right.height if self.right else -1
         return right_height - left_height
     
-    def setHeight(self):        #Set height base on child node
+    def setHeight(self):       
         a = self.left.height if self.left else -1  
         b = self.right.height if self.right else -1
         self.height = 1 + max(a,b)
 
-    def rotateRight(self):      #Rotate right (clockwise)
+    def rotateRight(self):    
         new_root = self.left
         self.left = new_root.right
         new_root.right = self
@@ -141,7 +140,7 @@ class Node:
         new_root.setHeight()
         return new_root
     
-    def rotateLeft(self):       #Rotate left (counter-clockwise)
+    def rotateLeft(self):    
         new_root = self.right
         self.right = new_root.left
         new_root.left = self
