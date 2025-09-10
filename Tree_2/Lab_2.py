@@ -6,20 +6,18 @@ class Node:
         self.height = self.setHeight()
 
     def setHeight(self):
-        lheight = self.get_height(self.left)
-        rheight = self.get_height(self.right)
-        self.height = 1 + max(lheight, rheight)
+        a = self.getHeight(self.left)
+        b = self.getHeight(self.right)
+        self.height = 1 + max(a,b)
         return self.height
     
-    def get_height(self, node):
+    def getHeight(self, node):
         if not node:
             return -1
         return node.height
     
     def balanceValue(self):
-        lheight = self.get_height(self.left)
-        rheight = self.get_height(self.right)
-        return lheight - rheight
+        return self.getHeight(self.left) - self.getHeight(self.right)
 
     def __str__(self):
         return str(self.data)
@@ -28,14 +26,18 @@ class AVL:
     def __init__(self):
         self.root = None
 
-    def insert(self, root, data):
+    def insert(self, data):
+        self.root = self._insert(self.root, data)
+        return self.root
+    
+    def _insert(self, root, data):
         if not root:
             return Node(data)
         else:
             if data < root.data:
-                root.left = self.insert(root.left, data)
+                root.left = self._insert(root.left, data)
             else:
-                root.right = self.insert(root.right, data)
+                root.right = self._insert(root.right, data)
             root = self.rebalance(root)
             return root
 
@@ -60,12 +62,12 @@ class AVL:
             return root
         balance = root.balanceValue()
         if balance == -2:
-            if root.left.balanceValue() == 1:
-                root.left = self.left_rotate(root.left)
+            if root.right.balanceValue() == 1:
+                root.right = self.left_rotate(root.right)
             root = self.right_rotate(root)
         elif balance == 2:
-            if root.right.balanceValue() == -1:
-                root.right = self.right_rotate(root.right)
+            if root.left.balanceValue() == -1:
+                root.left = self.right_rotate(root.left)
             root = self.left_rotate(root)
         root.setHeight()
         return root
@@ -86,15 +88,27 @@ def compare(tree1, tree2):
         return False
     return compare(tree1.left, tree2.left) and compare(tree1.right, tree2.right)
 
-avl1 = AVL()
-avl2 = AVL()
-inp = input("Enter Tree1/Tree2 : ").split("/")
-print("Tree 1")
-for item in inp[0].split():
-    avl1.root = avl1.insert(avl1.root, int(item))
-avl1.print_tree(avl1.root)
-print("\nTree 2")
-for item in inp[1].split():
-    avl2.root = avl2.insert(avl2.root, int(item))
-avl2.print_tree(avl2.root)
-print(f"\nSame Tree" if compare(avl1.root, avl2.root) else "\nDifferent Tree")
+Tree1 = AVL()
+Tree2 = AVL()
+Tree1_inp, Tree2_inp = (input("Enter Tree1/Tree2 : ")).split("/")
+Tree1_inp = Tree1_inp.split()
+Tree2_inp = Tree2_inp.split()
+
+for data in Tree1_inp:
+    Tree1.insert(int(data))
+
+for data in Tree2_inp:
+    Tree2.insert(int(data))
+
+print("Tree 1")    
+Tree1.print_tree(Tree1.root)
+print()
+
+print("Tree 2")
+Tree2.print_tree(Tree2.root)
+print()
+
+if compare(Tree1.root, Tree2.root):
+    print("Same Tree")
+else:
+    print("Different Tree")
