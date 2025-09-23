@@ -28,10 +28,8 @@ else:
         n = len(temp_list_sorted)
         median = 0.0
         if n % 2 == 1:
-            # ถ้าจำนวนข้อมูลเป็นเลขคี่, มัธยฐานคือตัวตรงกลาง
             median = float(temp_list_sorted[n // 2])
         else:
-            # ถ้าจำนวนข้อมูลเป็นเลขคู่, มัธยฐานคือค่าเฉลี่ยของ 2 ตัวตรงกลาง
             mid1 = temp_list_sorted[(n // 2) - 1]
             mid2 = temp_list_sorted[n // 2]
             median = (mid1 + mid2) / 2.0
