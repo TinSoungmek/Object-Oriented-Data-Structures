@@ -64,5 +64,9 @@
 
 # for name, number in fav_numbers.items():
 #     print(name + ' loves ' + str(number))
-it = "andf"
-print(it.index("n"))
+# it = "andf"
+# print(it.index("n"))
+def test(str):
+    return str
+print(test("rodsj"),end="")
+print(" woedmsd")
